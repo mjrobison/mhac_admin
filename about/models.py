@@ -5,6 +5,7 @@ from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail_headless_preview.models import HeadlessPreviewMixin
+
 from streams import blocks
 
 
@@ -25,9 +26,14 @@ class AboutStreamFields(HeadlessPreviewMixin, Page):
     content = StreamField(
         [
             ("about_paragraph", blocks.ParagraphRichTextBlock())
-        ]
+        ],
+        null=True, blank=True
     )
 
     content_panels = Page.content_panels + [
         StreamFieldPanel('content')
+    ]
+
+    api_fields = [
+        APIField('content')
     ]

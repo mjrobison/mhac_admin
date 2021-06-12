@@ -62,9 +62,12 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.amazon_cognito',
+
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -141,8 +144,6 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by e-mail
     # 'allauth.account.auth_backends.AuthenticationBackend',
 
-
-
 ]
 
 # Internationalization
@@ -195,7 +196,7 @@ SITE_ID = 1
 
 
 HEADLESS_PREVIEW_CLIENT_URLS = {
-    'default': 'http://localhost:8080/schools/tennessee_heat',
+    'default': 'http://localhost:8080/compliance',
 }
 HEADLESS_PREVIEW_LIVE = True
 
@@ -205,4 +206,16 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-# AUTH_USER_MODEL = 'accountss.User'
+# AUTH_USER_MODEL = 'accounts.User'
+
+
+CORS_ALLOW_ALL_ORIGINS = False
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+    'http://localhost:8000',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080'
+]
