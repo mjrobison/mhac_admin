@@ -30,8 +30,7 @@ INSTALLED_APPS = [
     'about',
     'tournament',
     'streams',
-    # 'accounts',
-
+    'core',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -200,11 +199,11 @@ HEADLESS_PREVIEW_CLIENT_URLS = {
 }
 HEADLESS_PREVIEW_LIVE = True
 
-SOCIALACCOUNT_PROVIDERS = {
-    'amazon_cognito': {
-        'DOMAIN': 'https://mhacsports.auth.us-east-1.amazoncognito.com',
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'amazon_cognito': {
+#         'DOMAIN': 'https://mhacsports.auth.us-east-1.amazoncognito.com',
+#     }
+# }
 
 # AUTH_USER_MODEL = 'accounts.User'
 
@@ -212,10 +211,12 @@ SOCIALACCOUNT_PROVIDERS = {
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8081',
     'http://localhost:8080',
     'http://localhost:8000',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8080'
+    'http://localhost:8081'
+    'http://localhost:8080',
 ]
