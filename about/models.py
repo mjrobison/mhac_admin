@@ -37,7 +37,6 @@ class AboutStreamFields(HeadlessPreviewMixin, Page):
         # ),
     ]
 
-
     api_fields = [
         APIField('section')
     ]
@@ -47,10 +46,11 @@ class AboutPageContent(Orderable):
     page = ParentalKey(AboutStreamFields, on_delete=models.CASCADE, related_name='section')
     displaySectionTitle = models.BooleanField(default=True)
     sectionHeader = models.CharField(null=True, blank=True, max_length=150)
-    content = StreamField(
+    content = RichTextField(null=True, blank=True)
+
+    subsections = StreamField(
         [
             ("about_paragraph", blocks.ParagraphRichTextBlock()),
-            # ("document", blocks.DocumentBlock())
 
         ],
         null=True, blank=True
@@ -58,13 +58,15 @@ class AboutPageContent(Orderable):
     panels = [
         FieldPanel('sectionHeader'),
         FieldPanel('displaySectionTitle'),
-        StreamFieldPanel('content')
+        FieldPanel('content'),
+        StreamFieldPanel('subsections')
     ]
 
     api_fields = [
         APIField('displaySectionTitle'),
         APIField('sectionHeader'),
         APIField('content'),
+        APIField('subsections')
     ]
 
 
