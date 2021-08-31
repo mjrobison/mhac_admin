@@ -189,7 +189,7 @@ WAGTAIL_SITE_NAME = "mhac_admin"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://example.com'
+BASE_URL = 'http://mhacsports.com'
 
 SITE_ID = 1
 
@@ -214,9 +214,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:8081',
     'http://localhost:8080',
     'http://localhost:8000',
+    'https://mhacsports.com'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:8081'
+    'http://localhost:8081',
     'http://localhost:8080',
 ]

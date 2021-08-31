@@ -1,5 +1,5 @@
 from .base import *
-from configparser import ConfigParser
+import configparser
 
 
 DEBUG = False
@@ -10,11 +10,13 @@ except ImportError:
     pass
 
 parser = configparser.ConfigParser()
-parser.read("~/db.conf")
+parser.read("../db.conf")
 
-SECRET_KEY = parser.get("django", "secrets")
+sections = parser.sections()
+
+SECRET_KEY = parser['django']['secrets']
 USER = parser.get("DB", "user")
-NAME = parser.get("DB", "name")
+NAME = parser.get("DB", "db")
 PASSWORD = parser.get("DB", "password")
 HOST = parser.get("DB", "host")
 PORT = parser.get("DB", 'port')
@@ -29,4 +31,26 @@ DATABASES = {
         'HOST': HOST,
         'PORT': PORT,
     }
+}
+
+ALLOWED_HOSTS = ['.mhacsports.com', '138.197.100.63']
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '/home/matt/mhac_admin/debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
