@@ -13,10 +13,9 @@ class HomePage(Page):
     max_count=1
     hero_image = models.ForeignKey(
         "wagtailimages.Image",
-        null= True,
+        null=True,
         blank=True,
-        on_delete = models.SET_NULL , 
-
+        on_delete=models.SET_NULL,
     )
     tagline_line1 = models.CharField(max_length=150, blank=True, null=True)
     tagline_line2 = models.CharField(max_length=150, blank=True, null=True)
