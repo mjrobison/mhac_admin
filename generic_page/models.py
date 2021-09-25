@@ -14,7 +14,8 @@ class GenericPage(HeadlessPreviewMixin, Page):
     content = StreamField(
         [
             ("team_image_block", blocks.LogoBlock()),
-            ("page_content", blocks.ParagraphRichTextBlock())
+            ("page_content", blocks.ParagraphRichTextBlock()),
+            ("content_image", blocks.ContentImageBlock()),
 
         ],
         null=True, blank=True

@@ -19,15 +19,6 @@ class AboutStreamFields(HeadlessPreviewMixin, Page):
         related_name='+'
     )
 
-    # content = StreamField(
-    #     [
-    #         ("about_paragraph", blocks.ParagraphRichTextBlock()),
-    #         ("document", blocks.DocumentBlock())
-    #
-    #     ],
-    #     null=True, blank=True
-    # )
-
     content_panels = Page.content_panels + [
         InlinePanel("section")
         # StreamFieldPanel('content'),
@@ -70,3 +61,17 @@ class AboutPageContent(Orderable):
     ]
 
 
+# class ContentImageListPage(Page):
+#     year = models.CharField(max_length=4, null=False, blank=False)
+#     # content_image = blocks.ContentImageBlock()
+#     content_image = StreamField(
+#         [
+#             ("content_image", blocks.ContentImageBlock()),
+#
+#         ],
+#         null=True, blank=True
+#     )
+#     panels = [
+#         StreamFieldPanel(content_image)
+#     ]
+#
