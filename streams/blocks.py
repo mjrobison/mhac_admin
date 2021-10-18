@@ -2,7 +2,9 @@ from wagtail.core import blocks
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.core.templatetags.wagtailcore_tags import richtext
-from wagtail.core.blocks import ChoiceBlock, CharBlock
+from wagtail.core.blocks import ChoiceBlock, CharBlock, URLBlock
+from wagtail.contrib.table_block.blocks import TableBlock
+
 
 import requests
 
@@ -19,13 +21,20 @@ class ParagraphRichTextBlock(blocks.StructBlock):
     header = blocks.CharBlock(form_classname="Section Header", required=False, blank=True)
     displayHeader = blocks.BooleanBlock(required=False)
     content = blocks.RichTextBlock(Required=True, help_text="Add the page content here")
+    isHeaderLink = blocks.BooleanBlock(form_classname="Is Header a Link", required=False)
+    headerLink = blocks.URLBlock(required=False)
 
+class TableBlock(blocks.StructBlock):
+    header = blocks.CharBlock(form_classname="Section Header", required=False, blank=True)
+    displayHeader = blocks.BooleanBlock(required=False)
+    isHeaderLink = blocks.BooleanBlock(form_classname="Is Header a Link", required=False)
+    headerLink = blocks.URLBlock(required=False)
+    content = TableBlock()
 
 class ContentImageBlock(blocks.StructBlock):
     try:
         seasons = requests.get('http://localhost:8000/getSeasons')
         seasons = seasons.json()
-        print(seasons)
         seasons = [(season['season_id'], season['season_name'] + ' ' + season['level']['name']) for season in seasons]
     except Exception as exc:
         seasons = [{

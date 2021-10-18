@@ -7,6 +7,7 @@ from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel
 from wagtail_headless_preview.models import HeadlessPreviewMixin
+
 from streams import blocks
 
 
@@ -42,6 +43,7 @@ class AboutPageContent(Orderable):
     subsections = StreamField(
         [
             ("about_paragraph", blocks.ParagraphRichTextBlock()),
+            ("table_block", blocks.TableBlock())
 
         ],
         null=True, blank=True
