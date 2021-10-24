@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'wagtail.core',
     'wagtail.api.v2',
     'wagtail_headless_preview',
+    'wagtail.contrib.table_block',
 
     'modelcluster',
     'taggit',
@@ -111,7 +112,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
