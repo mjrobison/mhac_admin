@@ -6,9 +6,6 @@ services:
     build:
       context: ../mhac_admin
       dockerfile: Dockerfile
-    depends_on:
-      - postgres
-    #   - mhac_api
     ports:
       - "8001:8001"
   
