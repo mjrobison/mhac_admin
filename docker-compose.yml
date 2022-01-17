@@ -8,15 +8,18 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8001:8001"
-  
-  postgres:
-    image: postgres:11.5-alpine
-    # container_name: "mhac_db"
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    volumes:
-      - ./db/:/docker-entrypoint-initdb.d
+      - DJANGO_SETTINGS_MODULE=mhac_admin.settings.dev
+    network_mode: bridge
+  
+  # postgres:
+  #   image: postgres:11.5-alpine
+  #   # container_name: "mhac_db"
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #   volumes:
+  #     - ./db/:/docker-entrypoint-initdb.d
     
