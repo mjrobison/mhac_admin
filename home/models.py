@@ -5,7 +5,6 @@ from modelcluster.fields import ParentalKey
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel, MultiFieldPanel, InlinePanel
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.images.api.fields import ImageRenditionField
 from wagtail.api import APIField
 
@@ -22,7 +21,7 @@ class HomePageCarouselOrderables(Orderable):
     )
 
     panels = [
-        ImageChooserPanel("carousel_image")
+        FieldPanel("carousel_image")
     ]
 
     api_fields = [
@@ -45,7 +44,6 @@ class HomePage(Page):
     message = RichTextField(blank=True, null=True)
 
     content_panels = Page.content_panels + [
-        # ImageChooserPanel("hero_image"),
         MultiFieldPanel([
             InlinePanel('hero_image', max_num=5, min_num=1, label="Image"),
         ], heading="Hero Carousel Images"),

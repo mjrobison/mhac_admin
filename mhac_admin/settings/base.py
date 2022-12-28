@@ -58,10 +58,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'rest_framework',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.amazon_cognito',
 
     'corsheaders',
 ]
@@ -112,7 +108,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'HOST': 'host.docker.internal',
         'PORT': '5432',
     }
 }
@@ -190,7 +186,7 @@ WAGTAIL_SITE_NAME = "mhac_admin"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-BASE_URL = 'http://mhacsports.com'
+WAGTAILADMIN_BASE_URL = 'http:/localhost:8080'
 
 SITE_ID = 1
 

@@ -14,12 +14,11 @@ import django.contrib.auth.urls
 urlpatterns = [
     path('django-admin/', admin.site.urls),
 
-    path('admin/', include(wagtailadmin_urls)),
     path('documents/', include(wagtaildocs_urls)),
 
     path('search/', search_views.search, name='search'),
     path('api/v2/', api_router.urls),
-    path('accounts/', include('allauth.urls')),
+    # path('accounts/', include('allauth.urls')),
 
 ]
 
@@ -45,7 +44,7 @@ urlpatterns = urlpatterns + [
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
 
-    path("", include(wagtailadmin_urls)),
+    path('admin/', include(wagtailadmin_urls)),
 
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:
