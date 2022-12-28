@@ -5,7 +5,7 @@ from modelcluster.fields import ParentalKey
 from wagtail.api import APIField
 from wagtail.core.models import Page, Orderable
 from wagtail.core.fields import RichTextField, StreamField
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel, InlinePanel
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
 from wagtail_headless_preview.models import HeadlessPreviewMixin
 
 from streams import blocks
@@ -22,11 +22,6 @@ class AboutStreamFields(HeadlessPreviewMixin, Page):
 
     content_panels = Page.content_panels + [
         InlinePanel("section")
-        # StreamFieldPanel('content'),
-        # MultiFieldPanel(
-        #     [InlinePanel("content_order", max_num=5, min_num=1, label="Image")],
-        #     heading="Content Section",
-        # ),
     ]
 
     api_fields = [
@@ -46,13 +41,13 @@ class AboutPageContent(Orderable):
             ("table_block", blocks.TableBlock())
 
         ],
-        null=True, blank=True
+        null=True, blank=True, use_json_field=True
     )
     panels = [
         FieldPanel('sectionHeader'),
         FieldPanel('displaySectionTitle'),
         FieldPanel('content'),
-        StreamFieldPanel('subsections')
+        FieldPanel('subsections')
     ]
 
     api_fields = [
