@@ -58,10 +58,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'rest_framework',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.amazon_cognito',
 
     'corsheaders',
 ]
