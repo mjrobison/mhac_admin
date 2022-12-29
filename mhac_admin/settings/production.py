@@ -1,7 +1,6 @@
 from .base import *
 import configparser
 
-
 DEBUG = False
 
 try:
@@ -54,3 +53,11 @@ LOGGING = {
         },
     },
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'https://mhacsports.com'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://mhacsports.com'
+]
