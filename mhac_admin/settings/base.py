@@ -196,14 +196,6 @@ HEADLESS_PREVIEW_CLIENT_URLS = {
 }
 HEADLESS_PREVIEW_LIVE = True
 
-# SOCIALACCOUNT_PROVIDERS = {
-#     'amazon_cognito': {
-#         'DOMAIN': 'https://mhacsports.auth.us-east-1.amazoncognito.com',
-#     }
-# }
-
-# AUTH_USER_MODEL = 'accounts.User'
-
 
 CORS_ALLOW_ALL_ORIGINS = False
 
