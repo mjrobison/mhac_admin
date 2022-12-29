@@ -11,7 +11,16 @@ ALLOWED_HOSTS = ['*']
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8081',
+    'http://localhost:8080',
+    'http://localhost:8000',
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8081',
+    'http://localhost:8080',
+]
 try:
     from .local import *
 except ImportError:

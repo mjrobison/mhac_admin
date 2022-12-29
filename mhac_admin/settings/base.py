@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import configparser
+
+parser = configparser.ConfigParser()
+parser.read("../db.conf")
+
+sections = parser.sections()
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
@@ -108,7 +114,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'password',
-        'HOST': 'host.docker.internal',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
@@ -133,12 +139,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
+    # # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     'django.contrib.auth.backends.RemoteUserBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
     # 'allauth.account.auth_backends.AuthenticationBackend',
+    
+    # Needed for Django Warrant 
+    'django_warrant.backend.CognitoBackend',
 
 ]
 
@@ -210,3 +219,16 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8081',
     'http://localhost:8080',
 ]
+
+COGNITO = parser['cognito']
+COGNITO_USER_POOL_ID =  COGNITO.get('poolId','')
+COGNITO_APP_ID = COGNITO.get('appId','')
+COGNITO_ATTR_MAPPING={
+    'email': 'email',
+    'given_name': 'first_name',
+    'family_name': 'last_name',
+}
+COGNITO_CREATE_UNKNOWN_USERS=True
+COGNITO_USER_POOL=COGNITO.get('userPoolRegion', 'us-east-1')
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
