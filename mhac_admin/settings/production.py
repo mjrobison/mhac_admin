@@ -1,7 +1,6 @@
 from .base import *
 import configparser
 
-
 DEBUG = False
 
 try:
