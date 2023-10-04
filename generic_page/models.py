@@ -1,27 +1,41 @@
 from django.db import models
 
-from wagtail.api import APIField
-from wagtail.core.models import Page
-from wagtail.core.fields import StreamField
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail_headless_preview.models import HeadlessPreviewMixin
+from modelcluster.fields import ParentalKey
 
+from wagtail.api import APIField
+from wagtail.core.models import Page, Orderable
+from wagtail.core.fields import StreamField
+from wagtail.admin.edit_handlers import FieldPanel, InlinePanel
+from wagtail_headless_preview.models import HeadlessPreviewMixin
+from django.conf import settings
 from streams import blocks
 
 
-class GenericPage(HeadlessPreviewMixin, Page):
+class GenericPage(Page):
+
+    content_panels = Page.content_panels + [
+        InlinePanel('champsList', max_num=1)
+    ]
+
+    api_fields = [
+        APIField('champsList')
+    ]
+    
+
+
+class ChampionPageContent(Orderable):
+    page = ParentalKey(GenericPage, on_delete=models.CASCADE, related_name='champsList')
 
     content = StreamField(
         [
-            ("team_image_block", blocks.LogoBlock()),
-            ("page_content", blocks.ParagraphRichTextBlock()),
-            ("content_image", blocks.ContentImageBlock()),
+            ("content_left", blocks.LeftContentImageBlock()),
+            ("content_right", blocks.RightContentImageBlock())
 
         ],
         null=True, blank=True, use_json_field=True
     )
 
-    content_panels = Page.content_panels + [
+    panels = [
         FieldPanel('content')
     ]
 

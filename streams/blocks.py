@@ -4,7 +4,11 @@ from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.core.templatetags.wagtailcore_tags import richtext
 from wagtail.core.blocks import ChoiceBlock, CharBlock, URLBlock
 from wagtail.contrib.table_block.blocks import TableBlock
+from wagtail.api import APIField
+from wagtail.images.api.fields import ImageRenditionField
 
+
+from django.conf import settings
 
 import requests
 
@@ -32,25 +36,94 @@ class TableBlock(blocks.StructBlock):
     content = TableBlock()
 
 class ContentImageBlock(blocks.StructBlock):
-    try:
-        seasons = requests.get('http://localhost:8000/getSeasons')
-        seasons = seasons.json()
-        seasons = [(season['season_id'], season['season_name'] + ' ' + season['level']['name']) for season in seasons]
-    except Exception as exc:
-        seasons = [{
-            'season_id': '',
-            'season_name': '',
-            'level': {
-                'name': '',
-                'id': ''
-            }
-        }]
+    # try:
+    seasons = requests.get(f'{settings.BASE_API_URL}/getSeasons')
+    seasons = seasons.json()
+    seasons = [(f"{season['season_name']} {season['level']}", f"{season['season_name']} {season['level']}") for season in seasons]
 
-    year = blocks.ChoiceBlock(choices=seasons) # CharBlock(max_length=4, null=True, blank=True)
+
+    teams = requests.get(f'{settings.BASE_API_URL}/getTeams')
+    teams = teams.json()
+    teams = [(f"{team['team_name']} {team['team_mascot']}", f"{team['team_name']} {team['team_mascot']}") for team in teams]
+
+    year = ChoiceBlock(choices=seasons)
+    team = ChoiceBlock(choices=teams)
     image = ImageChooserBlock(Required=True)
-    image_location = blocks.ChoiceBlock(choices=[
+    image_location = ChoiceBlock(choices=[
                                                     ('content-left', 'Left'),
                                                     ('content-center', 'Center'),
                                                     ('content-right', 'Right'),
                                                 ])
+    api_fields = [
+        APIField('year'),
+        APIField('team'),
+        APIField('image_location'),
+        APIField('image', serializer=ImageRenditionField('fill-200x250', source='image'))
+    ]
+
+    def get_api_representation(self, value, context=None):
+        """ Recursively call get_api_representation on children and return as a plain dict """
+        new_dict = {}
+        new_dict['year'] = value.get('year')
+        new_dict['team'] = value.get('team')
+        new_dict['image_location'] = value.get('image_location')
+        new_dict['image_url'] = value.get('image').file.url
+
+
+        return new_dict
+
+class LeftContentImageBlock(blocks.StructBlock):
+    # try:
+    seasons = requests.get(f'{settings.BASE_API_URL}/getSeasons')
+    seasons = seasons.json()
+    seasons = [(f"{season['season_name']} {season['level']}", f"{season['season_name']} {season['level']}") for season in seasons]
+
+
+    teams = requests.get(f'{settings.BASE_API_URL}/getTeams')
+    teams = teams.json()
+    teams = [(f"{team['team_name']} {team['team_mascot']}", f"{team['team_name']} {team['team_mascot']}") for team in teams]
+
+    year = ChoiceBlock(choices=seasons)
+    team = ChoiceBlock(choices=teams)
+    image = ImageChooserBlock(Required=True)
+
+    def get_api_representation(self, value, context=None):
+        """ Recursively call get_api_representation on children and return as a plain dict """
+        new_dict = {}
+        new_dict['year'] = value.get('year')
+        new_dict['team'] = value.get('team')
+        new_dict['image_location'] = 'content-left'
+        new_dict['image_url'] = value.get('image').file.url
+
+
+        return new_dict
+
+class RightContentImageBlock(blocks.StructBlock):
+    # try:
+    seasons = requests.get(f'{settings.BASE_API_URL}/getSeasons')
+    seasons = seasons.json()
+    seasons = [(f"{season['season_name']} {season['level']}", f"{season['season_name']} {season['level']}") for season in seasons]
+
+
+    teams = requests.get(f'{settings.BASE_API_URL}/getTeams')
+    teams = teams.json()
+    teams = [(f"{team['team_name']} {team['team_mascot']}", f"{team['team_name']} {team['team_mascot']}") for team in teams]
+
+    year = ChoiceBlock(choices=seasons)
+    team = ChoiceBlock(choices=teams)
+    image = ImageChooserBlock(Required=True)
+
+    def get_api_representation(self, value, context=None):
+        """ Recursively call get_api_representation on children and return as a plain dict """
+        new_dict = {}
+        new_dict['year'] = value.get('year')
+        new_dict['team'] = value.get('team')
+        new_dict['image_location'] = 'content-right'
+        new_dict['image_url'] = value.get('image').file.url
+
+
+        return new_dict
+
+
+
 

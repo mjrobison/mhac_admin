@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'tournament',
     'streams',
     'core',
+    'champs',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
@@ -147,7 +148,7 @@ AUTHENTICATION_BACKENDS = [
     # 'allauth.account.auth_backends.AuthenticationBackend',
     
     # Needed for Django Warrant 
-    'django_warrant.backend.CognitoBackend',
+    # 'django_warrant.backend.CognitoBackend',
 
 ]
 
@@ -220,15 +221,17 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8080',
 ]
 
-COGNITO = parser['cognito']
-COGNITO_USER_POOL_ID =  COGNITO.get('poolId','')
-COGNITO_APP_ID = COGNITO.get('appId','')
-COGNITO_ATTR_MAPPING={
-    'email': 'email',
-    'given_name': 'first_name',
-    'family_name': 'last_name',
-}
-COGNITO_CREATE_UNKNOWN_USERS=True
-COGNITO_USER_POOL=COGNITO.get('userPoolRegion', 'us-east-1')
+# COGNITO = parser['cognito']
+# COGNITO_USER_POOL_ID =  COGNITO.get('poolId','')
+# COGNITO_APP_ID = COGNITO.get('appId','')
+# COGNITO_ATTR_MAPPING={
+#     'email': 'email',
+#     'given_name': 'first_name',
+#     'family_name': 'last_name',
+# }
+# COGNITO_CREATE_UNKNOWN_USERS=True
+# COGNITO_USER_POOL=COGNITO.get('userPoolRegion', 'us-east-1')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+BASE_API_URL = 'http://localhost:8005'
