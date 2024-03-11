@@ -45,7 +45,7 @@ class HomePage(Page):
 
     content_panels = Page.content_panels + [
         MultiFieldPanel([
-            InlinePanel('hero_image', max_num=5, min_num=1, label="Image"),
+            InlinePanel('hero_image', max_num=10, min_num=1, label="Image"),
         ], heading="Hero Carousel Images"),
         FieldPanel("message"),
         MultiFieldPanel([
